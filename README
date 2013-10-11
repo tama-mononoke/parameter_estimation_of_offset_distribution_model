@@ -21,3 +21,9 @@ http://commons.apache.org/proper/commons-logging/
 Apache Commons Math
 http://commons.apache.org/proper/commons-math/
 
+NOTE
+The developper will be happy if you refer the following paper when you use this software in your analysis and publish your result.
+
+M. Fujita, Estimation of Navigation Performance and Offset by the EM algorithm and the variational Bayesian method, Advances and Applications in Statistics, vol. 35, no. 1, pp.1--27, 2013.
+  
+
