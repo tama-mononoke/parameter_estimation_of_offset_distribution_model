@@ -17,46 +17,46 @@ import org.apache.commons.math.random.MersenneTwister;
 import org.apache.commons.math.random.RandomGenerator;
 
 /**
- * {@link VariationBayesMLM}用テストデータ生成器
- * @author 藤田雅人
+ * {@link VariationBayesMLM} test data generator
+ * @author Masato Fujita
  * 
  */
 public class TestDataGeneratorNDE {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(TestDataGeneratorNDE.class);
 	/**
-	 * 正規分布の個数
+	 * the number of Gaussian components in the mixture distribution.
 	 */
 	private final int m;
 	/**
-	 * 両側指数分布の個数
+	 * the number of Laplace components in the mixture distribution.
 	 */
 	private final int n;
 	/**
-	 * alphaの値
+	 * the mixing coefficients
 	 */
 	private double alpha[];
 	/**
-	 * lambdaの値
+	 * the scale parameter of Laplace distributions
 	 */
 	private double lambda[];
 	/**
-	 * sigmaの値
+	 * the standard deviation of Gaussian distributions
 	 */
 	private double sigma[];
 	/**
-	 * 計算用変数
+	 * temporary variable
 	 */
 	private double tmp_alpha[];
 	/**
-	 * 乱数生成器
+	 * Random sample generator
 	 */
 	private RandomGenerator random;
 	/**
-	 * コンストラクタ
-	 * @param prop プロパティ
+	 * Constructor
+	 * @param prop configuration
 	 */
 	public TestDataGeneratorNDE(Properties prop){
 		m = Integer.parseInt(prop.getProperty("m"));
@@ -88,8 +88,8 @@ public class TestDataGeneratorNDE {
 	}
 	
 	/**
-	 * コンストラクタ
-	 * @param nde NDEインスタンス
+	 * Constructor
+	 * @param nde NDE instance
 	 */
 	public TestDataGeneratorNDE(NDE nde){
 		m = nde.getM();
@@ -110,8 +110,8 @@ public class TestDataGeneratorNDE {
 	
 	
 	/**
-	 * 乱数の生成
-	 * @return 擬似乱数とそれを生成した分布の識別番号
+	 * Generate random samples.
+	 * @return random samples and the identification number of the generating distribution component.
 	 */
 	public double[] generate(){
 		double tmp = random.nextDouble();
@@ -139,8 +139,8 @@ public class TestDataGeneratorNDE {
 	}
 	
 	/**
-	 * 本クラスの確認用プログラム。生成した乱数とそれを生成した分布モデルの番号を出力
-	 * @param args args[0]:分布を定義したプロパティファイル, args[1]：出力ファイル, args[2]:データ出力個数
+	 * Test program. Random samples and the identification number of the generating distribution component are recorded.
+	 * @param args args[0]:Configuration file defining distribution, args[1]：output file, args[2]: NUmber of generated samples.
 	 */
 	public static void main(String[] args) {
 		try{

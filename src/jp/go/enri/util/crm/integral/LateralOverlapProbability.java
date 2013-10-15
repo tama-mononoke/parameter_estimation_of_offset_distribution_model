@@ -14,8 +14,9 @@ import org.apache.commons.math.special.Erf;
  * All functions are implemented based on SASP-WG/WHL/11-WP/05 and SASP-WG/WHL/9-WP/14.
  * @author Masato Fujita
  * @version 1.1
- * 2009/04/21
- * 2011/11/22
+ * 2009/04/21<br/>
+ * 2011/11/22<br/>
+ * 2013/10/15<br/>
  */
 public class LateralOverlapProbability {
 	
@@ -24,12 +25,12 @@ public class LateralOverlapProbability {
 	 */
 	private static final double epsilon = Math.pow(10,-5);
 	/**
-	 * 横方向重畳確率計算
-	 * @param nde1 分布モデル
-	 * @param nde2 分布モデル
-	 * @param S 経路間隔(NM)
-	 * @param w 翼長
-	 * @return 横方向重畳確率
+	 * Lateral overlap probability
+	 * @param nde1 Distribution model
+	 * @param nde2 Distribution model
+	 * @param S Route spacing(NM)
+	 * @param w Wing Span
+	 * @return Lateral overlap probability
 	 */
 	public static double evaluateLateralOverlapProbability(NDE nde1, NDE nde2, double S, double w) throws MathException{
 		int m1 = nde1.getM();
@@ -75,7 +76,7 @@ public class LateralOverlapProbability {
 	private static double Psi(double x) throws MathException{
 		double val = 1;
 		double tmp = Math.abs(x)/Math.sqrt(2);
-		if(tmp < 20){ //1-Erf(20)=5.40E-176でほとんど1と見なして構わない。
+		if(tmp < 20){ //1-Erf(20)=5.40E-176. It is almost 1.
 			try{
 				val = Erf.erf(tmp);
 			}

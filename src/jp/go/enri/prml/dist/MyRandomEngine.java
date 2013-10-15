@@ -7,19 +7,19 @@ import cern.jet.random.engine.MersenneTwister;
 import cern.jet.random.engine.RandomEngine;
 
 /**
- * 乱数生成器
- * @author 藤田雅人
+ * Random sample generator
+ * @author Masato Fujita
  *
  */
 public class MyRandomEngine {
 	/**
-	 * 乱数生成器
+	 * Random sample generator
 	 */
 	private static RandomEngine engine = null;
 	private MyRandomEngine(){}
 	/**
-	 * 乱数生成器を取得
-	 * @return 乱数生成器
+	 * Get the random sample generator.
+	 * @return Random sample generator
 	 */
 	public static RandomEngine getRandomEngine(){
 		if(engine==null) engine = new MersenneTwister();

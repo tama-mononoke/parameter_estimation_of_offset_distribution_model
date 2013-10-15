@@ -10,19 +10,19 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
- * プログラムの実行
- * @author 藤田雅人
+ * Run the software.
+ * @author Masatoo Fujita
  *
  */
 public class Facade {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(Facade.class);
 	/**
-	 * 実行
+	 * run
 	 * @param args
-	 * arg[0]: "u" ベイズ更新
+	 * arg[0]: "u" Bayesian update programs
 	 */
 	public static void main(String[] args) {
 		PropertyConfigurator.configure( "log4j.properties" );

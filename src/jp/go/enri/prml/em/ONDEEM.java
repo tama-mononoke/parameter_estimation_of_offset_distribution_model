@@ -10,55 +10,55 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * EM法によるガウス分布とラプラス分布の混合オフセット分布のパラメータ推定。
- * @author 藤田雅人（電子航法研究所）
+ * Parameter estimation of the offset mixture distribution by means of the EM algorithm.
+ * @author Masato Fujita (Electronic Navigation Research Institute) 
  * @version 1.0.1　(Last update: 06/12/2011)
  *
  */
 public class ONDEEM {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(ONDEEM.class);
 	/**
-	 * 対数尤度用閾値
+	 * Threshold for log-likelihood
 	 */
 	public static double logLiklihood_threshold = 10E-3;
 	/**
-	 * EM法による計算値を格納
-	 * @author 藤田雅人
+	 * Result of EM algorithm
+	 * @author Masato Fujita
 	 *
 	 */
 	public static class Result{
 		/**
-		 * ガウス分布とラプラス分布の混合オフセット分布のパラメータを取得。
-		 * @return ガウス分布とラプラス分布の混合オフセット分布のパラメータ
+		 * Get the parameters of distribution model.
+		 * @return the parameters of distribution model
 		 */
 		public ONDE getParam() {
 			return param;
 		}
 		/**
-		 * 対数尤度を取得
-		 * @return 対数尤度
+		 * Get the log-likelihood.
+		 * @return log-likelihood
 		 */
 		public double getLogLiklihood() {
 			return logLiklihood;
 		}
 		/**
-		 * ガウス分布とラプラス分布の混合オフセット分布のパラメータ
+		 * the parameters of distribution model
 		 */
 		ONDE param;
 		/**
-		 * 対数尤度
+		 * log-likelihood
 		 */
 		double logLiklihood;
 	}
 	
 	/**
-	 * EM法によるパラメータ推定
-	 * @param initial_params 初期パラメータ
-	 * @param data 観測値
-	 * @return 推定結果
+	 * Parameter estimation by means of EM algorithm
+	 * @param initial_params initial parameter
+	 * @param data observations
+	 * @return estimations
 	 */
 	public Result estimate(ONDE initial_params, double[] data){
 		log.info("EM method estimation process started.");
@@ -84,7 +84,7 @@ public class ONDEEM {
 			Estep(params,data,gamma);
 			// M step
 			params = Mstep(initial_params.getM(),initial_params.getN(),initial_params.getOffset(),data,gamma);
-			// 対数尤度の計算
+			// log-likelihood
 			logLiklihood_pre = logLiklihood;
 			logLiklihood = logLiklihood(params,data);
 //			System.out.println("Result");
@@ -101,7 +101,7 @@ public class ONDEEM {
 //				System.out.println("lambda[" + i + "]=" + params.getLambda()[i]);
 //			}
 //			System.out.println("-----------------------------");
-			// 停止条件
+			// stopping conditionn
 			if(Math.abs(logLiklihood - logLiklihood_pre) < logLiklihood_threshold/N) flag = false;
 			else if(logLiklihood_pre > logLiklihood) throw new ArithmeticException();
 		}while(flag);
@@ -113,10 +113,10 @@ public class ONDEEM {
 	}
 	
 	/**
-	 * E-stepを実装。負担率を計算。
-	 * @param param 混合正規分布のパラメータ
-	 * @param data 観測値
-	 * @param gamma 負担率の計算値を格納する配列
+	 * E-step. Compute the burden rate. 
+	 * @param param Parameter of mixture distributions
+	 * @param data observations
+	 * @param gamma burden rates
 	 */
 	void Estep(ONDE param, double[] data, double gamma[][][]){
 		log.info("EM method E-step process started.");
@@ -146,13 +146,13 @@ public class ONDEEM {
 	}
 	
 	/**
-	 * M-stepを実装。
-	 * @param m 混合分布に含まれるガウス分布の数
-	 * @param n 混合分布に含まれるラプラス分布の数
-	 * @param offset オフセット値
-	 * @param data 観測値
-	 * @param gamma 負担率の計算値
-	 * @return ガウス分布とラプラス分布の混合分布のパラメータ
+	 * M-step
+	 * @param m the number of Gaussian components in the mixture distribution.
+	 * @param n the number of Laplace components in the mixture distribution.
+	 * @param offset offset
+	 * @param data observation
+	 * @param gamma burden rate
+	 * @return parameters of mixture distribution
 	 */
 	ONDE Mstep(int m, int n, double offset[], double data[],double gamma[][][]){
 		log.info("EM method M-step process started.");
@@ -202,10 +202,10 @@ public class ONDEEM {
 		return new ONDE(pi,sigma,lambda,offset,omega);
 	}
 	/**
-	 * 対数尤度を計算
-	 * @param param ガウス分布とラプラス分布の混合分布のパラメータ
-	 * @param data 観測値
-	 * @return 対数尤度
+	 * Compute the log-likelihood.
+	 * @param param parameters of mixture distribution
+	 * @param data observations
+	 * @return log-likelihood
 	 */
 	double logLiklihood(ONDE param,double data[]){
 		log.info("EM method log-liklihood evaluation process started.");

@@ -8,13 +8,13 @@ import java.util.Arrays;
 import cern.jet.random.AbstractDistribution;
 
 /**
- * Dirichlet分布の乱数生成
- * @author masato
+ * Random sample generator of Dirichlet distribution
+ * @author Masato Fujita
  *
  */
 public class Dirichlet {
 	/**
-	 * パラメータ
+	 * Parameter
 	 */
 	private double alpha[];
 
@@ -24,12 +24,12 @@ public class Dirichlet {
 	}
 	
 	/**
-	 * 乱数生成器
+	 * Random sample generator
 	 */
 	private AbstractDistribution dist[] = null;
 	/**
-	 * 乱数の生成
-	 * @return
+	 * Generate random samples.
+	 * @return samples
 	 */
 	public double[] nextDouble(){
 		if(dist==null){

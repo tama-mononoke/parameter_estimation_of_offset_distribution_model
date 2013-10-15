@@ -9,112 +9,112 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * ガウス分布とラプラス分布の混合オフセット分布のパラメータ
- * @author 藤田雅人（電子航法研究所）
+ * Parameter of offset mixture distribution with Gaussian and Laplace components
+ * @author Masato Fujita（Electronic Navigation Research Institute）
  * @version 1.0.1　(Last update: 06/12/2011)
  *
  */
 public class ONDE {
 	/**
-	 * オフセット値を取得
-	 * @return オフセット値
+	 * Get the feasible offset values.
+	 * @return the feasible offset values
 	 */
 	public double[] getOffset() {
 		return offset;
 	}
 	/**
-	 * オフセット混合比を取得
-	 * @return オフセット混合比
+	 * Get the offset mixing coefficients.
+	 * @return the offset mixing coefficients.
 	 */
 	public double[] getOmega() {
 		return omega;
 	}
 
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(ONDE.class);
 	/**
-	 * 混合分布に含まれるガウス分布の数を取得
-	 * @return 混合分布に含まれるガウス分布の数
+	 * Get the number of Gaussian components in the mixture distribution..
+	 * @return the number of Gaussian components in the mixture distribution.
 	 */
 	public int getM() {
 		return m;
 	}
 	/**
-	 * 混合分布に含まれるラプラス分布の数を取得
-	 * @return 混合分布に含まれるラプラス分布の数
+	 * Get the number of Laplace components in the mixture distribution.
+	 * @return the number of Laplace components in the mixture distribution.
 	 */
 	public int getN() {
 		return n;
 	}
 	/**
-	 * 混合比の値を取得
-	 * @return 混合比の値
+	 * Get the mixing coefficients.
+	 * @return the mixing coefficients.
 	 */
 	public double[] getPi() {
 		return Arrays.copyOf(pi, pi.length);
 	}
 	/**
-	 * ラプラス分布のスケールパラメータの値
-	 * @return ラプラス分布のスケールパラメータの値を取得
+	 * Get the scale parameter of Laplace distributions.
+	 * @return the scale parameter of Laplace distributions
 	 */
 	public double[] getLambda() {
 		return Arrays.copyOf(lambda, lambda.length);
 	}
 	/**
-	 * ガウス分布の標準偏差の値を取得
-	 * @return sigma ガウス分布の標準偏差の値
+	 * Get the standard deviation of Gaussian distributions.
+	 * @return sigma the standard deviation of Gaussian distributions
 	 */
 	public double[] getSigma() {
 		return Arrays.copyOf(sigma, sigma.length);
 	}
 	/**
-	 * とりうるオフセットの数を返す。
-	 * @return とりうるオフセットの数
+	 * Get the number of the feasible offset values.
+	 * @return the number of the feasible offset values
 	 */
 	public int getL(){
 		return offset.length;
 	}
 	/**
-	 * 混合分布に含まれるガウス分布の数
+	 * the number of Gaussian components in the mixture distribution.
 	 */
 	int m;
 	/**
-	 * 混合分布に含まれるラプラス分布の数
+	 * the number of Laplace components in the mixture distribution.
 	 */
 	int n;
 	/**
-	 * 混合比の値
+	 * the mixing coefficients
 	 */
 	double pi[];
 	/**
-	 * ラプラス分布のスケールパラメータの値
+	 * the scale parameter of Laplace distributions
 	 */
 	double lambda[];
 	/**
-	 * ガウス分布の標準偏差の値
+	 * the standard deviation of Gaussian distributions
 	 */
 	double sigma[];
 	/**
-	 * オフセット値
+	 * the feasible offset values
 	 */
 	double offset[];
 	/**
-	 * オフセット混合比
+	 * the offset mixing coefficients
 	 */
 	double omega[];
 	/**
-	 * コンストラクタ
+	 * Constructor
 	 */
 	private ONDE(){}
 	/**
-	 * コンストラクタ
-	 * @param pi 混合比の値
-	 * @param sigma ガウス分布の標準偏差の値
-	 * @param lambda ラプラス分布のスケールパラメータの値
-	 * @param offset オフセット値
-	 * @param omega オフセット混合比
+	 * Constructor
+	 * @param pi the mixing coefficients
+	 * @param sigma the standard deviation of Gaussian distributions
+	 * @param lambda the scale parameter of Laplace distributions
+	 * @param offset the feasible offset values
+	 * @param omega the offset mixing coefficients
 	 */
 	public ONDE(double[] pi, double[] sigma, double[] lambda, double[] offset, double[] omega) {
 		super();
@@ -182,9 +182,9 @@ public class ONDE {
 		return tmp;
 	}
 	/**
-	 * 各オフセット値が適用されている確率を推定
-	 * @param x 観測値
-	 * @return 各オフセット値が適用されている確率
+	 * Estimate the probability that the given offset value is applied.
+	 * @param x Observation. 
+	 * @return the probability that each offset value is applied.
 	 */
 	public double[] estimateOffsetProbability(double x){
 		double ans[] = new double[offset.length];

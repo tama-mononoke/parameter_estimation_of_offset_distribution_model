@@ -6,21 +6,21 @@ package jp.go.enri.prml.dist;
 import cern.jet.random.AbstractDistribution;
 
 /**
- * Gamma分布の乱数生成
- * @author masato
+ * Random sample generator of Gamma distribution
+ * @author Masato Fujita
  *
  */
 public class Gamma {
 	/**
-	 * パラメータ
+	 * Parameter
 	 */
 	private double a;
 	/**
-	 * パラメータ
+	 * Parameter
 	 */
 	private double b;
 	/**
-	 * 乱数生成器
+	 * Random sample generator
 	 */
 	private AbstractDistribution dist = null;
 	
@@ -29,8 +29,8 @@ public class Gamma {
 		this.b = b;
 	}
 	/**
-	 * 乱数の生成
-	 * @return
+	 * Generate random samples.
+	 * @return samples
 	 */
 	public double nextDouble(){
 		if(dist==null){

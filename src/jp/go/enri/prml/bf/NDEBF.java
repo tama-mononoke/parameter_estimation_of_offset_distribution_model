@@ -10,93 +10,93 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 総当たり法によるガウス分布とラプラス分布の混合分布のパラメータ最尤推定。
- * @author 藤田雅人（電子航法研究所）
+ * Maximum likelihood estimation of the mixture distribution by means of brute-force search.
+ * @author Masato Fujita (Electronic Navigation Research Istitute)
  * @version 1.0.1　(Last update: 30/11/2011)
  *
  */
 public class NDEBF {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(NDEBF.class);
 	/**
-	 * 対数尤度用閾値
+	 * Threshold for log-likelihood
 	 */
 	public static double logLiklihood_threshold = 10E-3;
 	/**
-	 * 総当たり法による計算値を格納
-	 * @author 藤田雅人
+	 * Result of the brute-force search algorithm
+	 * @author Masato Fujita
 	 *
 	 */
 	public static class Result{
 		/**
-		 * ガウス分布とラプラス分布の混合分布のパラメータを取得。
-		 * @return ガウス分布とラプラス分布の混合分布のパラメータ
+		 * Get the parameters of distribution model.
+		 * @return the parameters of distribution model
 		 */
 		public NDE getParam() {
 			return param;
 		}
 		/**
-		 * 対数尤度を取得
-		 * @return 対数尤度
+		 * Get the log-likelihood.
+		 * @return log-likelihood
 		 */
 		public double getLogLiklihood() {
 			return logLiklihood;
 		}
 		/**
-		 * ガウス分布とラプラス分布の混合分布のパラメータ
+		 * the parameters of distribution model
 		 */
 		NDE param;
 		/**
-		 * 対数尤度
+		 * log-likelihood
 		 */
 		double logLiklihood;
 	}
 	
 	/**
-	 * パラメータの値を増加させるのに用いる。
-	 * @author 藤田雅人
+	 * Used for the parameter value increments
+	 * @author Masato Fujita
 	 */
 	static class Increment{
 		/**
-		 * ログの取得
+		 * Log
 		 */
 		public static Log log = LogFactory.getLog(Increment.class);
 		/**
-		 * 分割数
+		 * Division number
 		 */
 		private int D;
 		/**
-		 * 混合分布に含まれるガウス分布の数
+		 * the number of Gaussian components in the mixture distribution.
 		 */
 		private int m;
 		/**
-		 * 混合分布に含まれるラプラス分布の数
+		 * the number of Laplace components in the mixture distribution.
 		 */
 		private int n;
 		/**
-		 * alphaのとりうる範囲
+		 * Range of alpha (mixing coefficients)
 		 */
 		private double alpha_bound[][];
 		/**
-		 * sigmaのとりうる範囲
+		 * Range of sigma (standard deviation of Gaussian components)
 		 */
 		private double sigma_bound[][];
 		/**
-		 * lambdaのとりうる範囲
+		 * Range of lambda (scale parameters of laplace distributions)
 		 */
 		private double lambda_bound[][];
 		/**
-		 * ポインタ
+		 * Pointer
 		 */
 		private int pointer[][];
 		/**
-		 * コンストラクタ
-		 * @param d
-		 * @param alpha_bound
-		 * @param sigma_bound
-		 * @param lambda_bound
+		 * Constructor 
+		 * @param d Division number
+		 * @param alpha_bound Range of alpha (mixing coefficients)
+		 * @param sigma_bound Range of sigma (standard deviation of Gaussian components)
+		 * @param lambda_bound Range of lambda (scale parameters of laplace distributions)
 		 */
 		Increment(int d, double[][] alpha_bound, double[][] sigma_bound,
 				double[][] lambda_bound) {
@@ -116,8 +116,8 @@ public class NDEBF {
 			}
 		}
 		/**
-		 * ポインタの増加
-		 * @return ポインタが終端に到達すればfalse。そうでなければtrue。
+		 * Move the pointer.
+		 * @return false if the pointer arrives at the end point, and true otherwise.
 		 */
 		boolean increment(){
 			while(increment2()){
@@ -133,8 +133,8 @@ public class NDEBF {
 		}
 		
 		/**
-		 * ポインタの増加
-		 * @return ポインタが終端に到達すればfalse。そうでなければtrue。
+		 * Move the pointer.
+		 * @return false if the pointer arrives at the end point, and true otherwise.
 		 */
 		private boolean increment2(){
 			for(int i=pointer.length-1;i>=0;i--){
@@ -151,8 +151,8 @@ public class NDEBF {
 		}
 		
 		/**
-		 * ポインタに対応するパラメータ値の取得
-		 * @return パラメータ値
+		 * Parameter values at the position of the pointer.
+		 * @return Parameter values
 		 */
 		NDE getCurrent(){
 			double alpha[] = new double[m+n];
@@ -173,6 +173,10 @@ public class NDEBF {
 			return new NDE(alpha,sigma,lambda);
 		}
 		
+		/**
+		 * Generate a new increment instance.
+		 * @return a new increment instance.
+		 */
 		Increment getNewIncrement(){
 			double tmp_alpha_bound[][] = new double[alpha_bound.length][];
 			double tmp_sigma_bound[][] = new double[sigma_bound.length][];
@@ -195,6 +199,9 @@ public class NDEBF {
 			return new Increment(D, tmp_alpha_bound, tmp_sigma_bound, tmp_lambda_bound);
 		}
 		
+		/**
+		 * print
+		 */
 		void print(){
 			if(log.isInfoEnabled()){
 				StringBuilder sb = new StringBuilder();
@@ -216,15 +223,15 @@ public class NDEBF {
 	}
 	
 	/**
-	 * 総当たり法によるパラメータ推定
-	 * @param D 
-	 * @param initial_params 初期パラメータ
-	 * @param data 観測値
-	 * @return 推定結果
+	 * parameter estimation by means of the brute-force search. 
+	 * @param D division number
+	 * @param initial_params inital parameter
+	 * @param data observations
+	 * @return estimations
 	 */
 	public Result estimate(NDEParameter initial_params, double[] data){
 		log.info("BF method estimation process started.");
-		// 変数の初期化
+		// Initialization
 		log.info("BF method initialization process started.");
 		int N = data.length;
 		double initial_alpha_bound[][] = new double[initial_params.initial_sigma_bound.length+initial_params.initial_lambda_bound.length-1][];
@@ -249,7 +256,7 @@ public class NDEBF {
 				}
 			}
 			while(incre.increment());
-			// 停止条件
+			// stopping condition
 			if(Math.abs(maxlogLiklihood - logLiklihood_pre) < logLiklihood_threshold/N) flag = false;
 			else{
 				incre = next_incre;
@@ -265,10 +272,10 @@ public class NDEBF {
 	
 	
 	/**
-	 * 対数尤度を計算
-	 * @param param ガウス分布とラプラス分布の混合分布のパラメータ
-	 * @param data 観測値
-	 * @return 対数尤度
+	 * Compute the log-likelihood.
+	 * @param param parameters of mixture distribution
+	 * @param data observations
+	 * @return log-likelihood
 	 */
 	double logLiklihood(NDE param,double data[]){
 		//log.info("BF method log-liklihood evaluation process started.");

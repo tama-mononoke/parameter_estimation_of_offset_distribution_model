@@ -23,16 +23,16 @@ import jp.go.enri.prml.vb.ONDEParameterDistribution;
 
 
 /**
- * 設定を読み取り、クラスを生成
- * @author 藤田雅人
+ * Read the cofiguration and generate instances. 
+ * @author Masato Fujita
  * @version 1.0.1　(Last update: 30/11/2011)
  */
 public class PRMLFactory {
 	private PRMLFactory(){}
 	/**
-	 * 設定より{@link ONDEParameterDistribution}クラスを構築
-	 * @param prop 設定
-	 * @return {@link ONDEParameterDistribution}クラス
+	 * Construct an {@link ONDEParameterDistribution} instance.
+	 * @param prop configuration
+	 * @return {@link ONDEParameterDistribution} instance
 	 */
 	public static ONDEParameterDistribution getONDEInVariationalBayes(Properties prop){
 		int L = Integer.parseInt(prop.getProperty("L"));
@@ -58,9 +58,9 @@ public class PRMLFactory {
 	}
 	
 	/**
-	 * 設定より{@link ONDE}クラスを構築
-	 * @param prop 設定
-	 * @return {@link ONDE}クラス
+	 * Construct an {@link ONDE} instance
+	 * @param prop configuation
+	 * @return {@link ONDE} instance
 	 */
 	public static ONDE getONDE(Properties prop){
 		int L = Integer.parseInt(prop.getProperty("L"));
@@ -93,9 +93,9 @@ public class PRMLFactory {
 	}
 	
 	/**
-	 * 設定より{@link ONDEParameter}クラスを構築
-	 * @param prop 設定
-	 * @return {@link ONDEParameter}クラス
+	 * Construct an {@link ONDEParameter} instance.
+	 * @param prop configuration
+	 * @return {@link ONDEParameter} instance
 	 */
 	public static ONDEParameter getONDEParameter(Properties prop){
 		double offset[] = new double[Integer.parseInt(prop.getProperty("L"))];
@@ -119,9 +119,9 @@ public class PRMLFactory {
 		return new ONDEParameter(Integer.parseInt(prop.getProperty("D")), offset,initial_sigma_bound, initial_lambda_bound);
 	}
 	/**
-	 * 設定より{@link NDEParameterDistribution}クラスを構築
-	 * @param prop 設定
-	 * @return {@link NDEParameterDistribution}クラス
+	 * Construct an {@link NDEParameterDistribution} instance.
+	 * @param prop configuration
+	 * @return {@link NDEParameterDistribution} instance
 	 */
 	public static NDEParameterDistribution getNDEInVariationalBayes(Properties prop){
 		int m = Integer.parseInt(prop.getProperty("m"));
@@ -140,9 +140,9 @@ public class PRMLFactory {
 	}
 	
 	/**
-	 * 設定より{@link NDE}クラスを構築
-	 * @param prop 設定
-	 * @return {@link NDE}クラス
+	 * Construct an {@link NDE} instance.
+	 * @param prop configuration
+	 * @return {@link NDE} instance
 	 */
 	public static NDE getNDE(Properties prop){
 		int m = Integer.parseInt(prop.getProperty("m"));
@@ -168,9 +168,9 @@ public class PRMLFactory {
 	}
 	
 	/**
-	 * 設定より{@link NDEParameter}クラスを構築
-	 * @param prop 設定
-	 * @return {@link NDEParameter}クラス
+	 * Construct an {@link NDEParameter} instance.
+	 * @param prop configuration
+	 * @return {@link NDEParameter} instance
 	 */
 	public static NDEParameter getNDEParameter(Properties prop){
 		double initial_sigma_bound[][] = new double[Integer.parseInt(prop.getProperty("m"))][];
@@ -192,11 +192,11 @@ public class PRMLFactory {
 		return new NDEParameter(Integer.parseInt(prop.getProperty("D")), initial_sigma_bound, initial_lambda_bound);
 	}
 	/**
-	 * ファイルから1次元数値データを読み込む
-	 * @param fileName ファイル名
-	 * @return データ
-	 * @throws FileNotFoundException ファイルが見つからないとき
-	 * @throws IOException 読み込みエラー
+	 * Read the 1-dimensional number data from the given file.
+	 * @param fileName file name
+	 * @return data
+	 * @throws FileNotFoundException When file is not found.
+	 * @throws IOException Read error.
 	 */
 	public static double[] getData1(String fileName) throws FileNotFoundException, IOException{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));

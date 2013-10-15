@@ -1,4 +1,4 @@
 /**
- * expectation-maximization法
+ * expectation-maximization algorithm
  */
 package jp.go.enri.prml.em;

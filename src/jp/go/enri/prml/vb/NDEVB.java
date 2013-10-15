@@ -8,61 +8,60 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.commons.math.special.Gamma;
 
 /**
- * 変分ベイズ法によるガウス分布とラプラス分布の混合分布のパラメータ推定。
- * アルゴリズムは「変分ベイズ法による正規分布と両側指数分布の混合分布のパラメータ推定」に記載。
- * @author 藤田雅人（電子航法研究所）
+ * Parameter estimation of the mixture distribution by means of the variational Bayesian method.
+ * @author Masato Fujita (Electronic Navigation Research Institute) 
  * @version 1.0.1　(Last update: 30/11/2011)
  *
  */
 public class NDEVB {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(NDEVB.class);
 	/**
-	 * とても小さな正の数。変分下限の増加がこれ以下になったら、計算をやめる。
+	 * Very small number. Computation is terminated when the lower bound is smaller than this value.
 	 */
 	public static double threshold = 10E-3; 
 	
 	/**
-	 * 変分ベイズ法による計算値を格納
-	 * @author 藤田雅人
+	 * Result of variational Bayes
+	 * @author Masato Fujita
 	 *
 	 */
 	public static class Result{
 		/**
-		 * ガウス混合分布の変分ベイズ法パラメータを取得。
-		 * @return ガウス混合分布の変分ベイズ法パラメータ
+		 * Get the parameter for variational Bayes.
+		 * @return the parameter for variational Bayes.
 		 */
 		public NDEParameterDistribution getParam() {
 			return param;
 		}
 		/**
-		 * 変分下限を取得
-		 * @return 変分下限
+		 * Get the lower bound.
+		 * @return the lower bound
 		 */
 		public double getLowerbound() {
 			return lowerbound;
 		}
 		/**
-		 * ガウス混合分布の変分ベイズ法パラメータ
+		 * the parameter for variational Bayes.
 		 */
 		NDEParameterDistribution param;
 		/**
-		 * 変分下限
+		 * the lower bound
 		 */
 		double lowerbound;
 	}
 	
 	/**
-	 * 変分ベイズ法によるパラメータ推定
-	 * @param initial_params 事前分布
-	 * @param dataMatrix データ行列
-	 * @return 推定結果
+	 * Parameter estimation by means of variational Bayes
+	 * @param initial_params prior distribution
+	 * @param dataMatrix data matrix
+	 * @return estimation result
 	 */
 	public Result estimate(NDEParameterDistribution initial_params, double data[]){
 		log.info("Variational Bayesian estimation process started.");
-		// 変数の初期化
+		// Innitialization
 		log.info("Variational Bayesian initialization process started.");
 		double r[][] = new double[data.length][];
 		int K = initial_params.m + initial_params.n;
@@ -81,10 +80,10 @@ public class NDEVB {
 			Estep(params,data,r);
 			// M step
 			Mstep(initial_params,data,r,Nk,params);
-			// 変分下限の計算
+			// Evaluate lower bound.
 			lowerbound_pre = lowerbound;
 			lowerbound = lowerbound(initial_params,params,r,Nk);
-			// 停止条件
+			// Stop condition
 			if(Math.abs(lowerbound - lowerbound_pre) < threshold/N) flag = false;
 			else if(lowerbound_pre > lowerbound) throw new ArithmeticException();
 		}while(flag);
@@ -97,15 +96,15 @@ public class NDEVB {
 	}
 	
 	/**
-	 * E-stepを実装
-	 * @param param パラメータ分布(IN)
-	 * @param data データ行列(IN)
-	 * @param r rの計算値を格納する配列(OUT)
+	 * E-step
+	 * @param param Parameter distribution(IN)
+	 * @param data data matrix(IN)
+	 * @param r Array for stocking the computation result of the variable `r.'(OUT)
 	 */
 	void Estep(NDEParameterDistribution param, double data[], double r[][]){
 		log.info("Variational Bayesian E-step process started.");
 		int K = param.m + param.n;
-		// 式(3)のiによらない部分をあらかじめ計算
+		// Compute the terms which are independent of the value of i.
 		double tmp1[] = new double[K];
 		for(int k=0;k<param.m;k++){
 			tmp1[k] = Gamma.digamma(param.alpha[k])+0.5*(Gamma.digamma(param.a[k])-Math.log(param.b[k])-Math.log(2*Math.PI));
@@ -115,15 +114,15 @@ public class NDEVB {
 		}
 		int N = data.length;
 		for(int i=0;i<N;i++){
-			// rho_{nk}の計算値が小さくなりすぎるので、log(rho_{nk})の最大値の値を保持
+			// Since rho_{nk} is too small, the maximum of log(rho_{nk}) is saved.
 			double rhoMax = Double.NEGATIVE_INFINITY;
 			for(int k=0;k<param.m;k++){
-				double tmp = tmp1[k]-0.5*param.a[k]*Math.pow(data[i],2)/param.b[k]; //式(3)
+				double tmp = tmp1[k]-0.5*param.a[k]*Math.pow(data[i],2)/param.b[k];
 				r[i][k] = tmp;
 				rhoMax = Math.max(rhoMax, tmp);
 			}
 			for(int k=param.m;k<K;k++){
-				double tmp = tmp1[k]-param.a[k]*Math.abs(data[i])/param.b[k]; //式(3)
+				double tmp = tmp1[k]-param.a[k]*Math.abs(data[i])/param.b[k]; 
 				r[i][k] = tmp;
 				rhoMax = Math.max(rhoMax, tmp);
 			}
@@ -134,7 +133,7 @@ public class NDEVB {
 				sum += tmp;
 			}
 			for(int j=0;j<K;j++){
-				r[i][j] /= sum; //式(4)
+				r[i][j] /= sum; 
 			}
 		}
 		if(log.isDebugEnabled()){
@@ -153,23 +152,23 @@ public class NDEVB {
 	}
 	
 	/**
-	 * M-stepを実装
-	 * @param initial_param 事前分布(IN)
-	 * @param data データ行列(IN)
-	 * @param r rの計算値(IN)
-	 * @param Nk \sum_{i=1}^N r_{i,k}の計算値(OUT)
-	 * @param param パラメータ分布を格納する変数(OUT)
+	 * M-step
+	 * @param initial_param Prior distribution(IN)
+	 * @param data data matrix(IN)
+	 * @param r The variable `r'(IN)
+	 * @param Nk \sum_{i=1}^N r_{i,k}(OUT)
+	 * @param param Parameter distribution(OUT)
 	 */
 	void Mstep(NDEParameterDistribution initial_param, double data[], double r[][], double Nk[], NDEParameterDistribution param){
 		log.info("Variational Bayesian M-step process started.");
 		int N = data.length;
 		int K = initial_param.m + initial_param.n;
-		// \sum_{i=1}^N r_{i,k}を計算
+		// \sum_{i=1}^N r_{i,k}
 		for(int i=0;i<K;i++){
 			Nk[i] = 0;
 			for(int j=0;j<N;j++) Nk[i] += r[j][i];
 		}
-		// \sum_{i=1}^N r_{i,k}x_i^2と\sum_{i=1}^N r_{i,k}|x_i|を計算
+		// \sum_{i=1}^N r_{i,k}x_i^2と\sum_{i=1}^N r_{i,k}|x_i|
 		double xk[] = new double[K];
 		for(int k=0;k<param.m;k++){
 			xk[k] = 0;
@@ -179,27 +178,27 @@ public class NDEVB {
 			xk[k] = 0;
 			for(int i=0;i<N;i++) xk[k] += r[i][k]*Math.abs(data[i]);
 		}
-		// パラメータの値の更新
+		// Update Parameters.
 		for(int k=0;k<param.m;k++){
-			param.alpha[k] = initial_param.alpha[k] + Nk[k]; //式(6)
-			param.a[k] = initial_param.a[k] + Nk[k]/2; //式(7)
-			param.b[k] = initial_param.b[k] + xk[k]/2; //式(8)
+			param.alpha[k] = initial_param.alpha[k] + Nk[k]; //(6)
+			param.a[k] = initial_param.a[k] + Nk[k]/2; //(7)
+			param.b[k] = initial_param.b[k] + xk[k]/2; //(8)
 		}
 		for(int k=param.m;k<K;k++){
-			param.alpha[k] = initial_param.alpha[k] + Nk[k]; //式(6)
-			param.a[k] = initial_param.a[k] + Nk[k]; //式(7)
-			param.b[k] = initial_param.b[k] + xk[k]; //式(8)
+			param.alpha[k] = initial_param.alpha[k] + Nk[k]; //(6)
+			param.a[k] = initial_param.a[k] + Nk[k]; //(7)
+			param.b[k] = initial_param.b[k] + xk[k]; //(8)
 		}
 		log.info("Variational Bayesian M-step process finished.");
 	}
 	
 	/**
-	 * 変分下限を計算。
-	 * @param initial_param 事前分布(IN)
-	 * @param r rの計算値(IN)
-	 * @param Nk \sum_{i=1}^N r_{i,k}の計算値(IN)
-	 * @param param パラメータ分布(IN)
-	 * @return 変分下限
+	 * Compute the lower bound.
+	 * @param initial_param Prior distribution(IN)
+	 * @param r The values of the parameter `r'(IN)
+	 * @param Nk \sum_{i=1}^N r_{i,k}(IN)
+	 * @param param Parameter distribution(IN)
+	 * @return Lower bound
 	 */
 	double lowerbound(NDEParameterDistribution initial_param, NDEParameterDistribution param, double r[][], double Nk[]){
 		log.info("Variational Bayesian lower bound calculation process started.");
@@ -211,7 +210,7 @@ public class NDEVB {
 			alpha0_hat += initial_param.alpha[k];
 			alpha_hat += param.alpha[k];
 		}
-		double tmp = Gamma.logGamma(alpha0_hat) - Gamma.logGamma(alpha_hat); //式(9)のkによらない項
+		double tmp = Gamma.logGamma(alpha0_hat) - Gamma.logGamma(alpha_hat); //Terms of (9) independent of k
 		for(int k=0;k<K;k++){
 			double tmp2 = 0;
 			for(int i=0;i<N;i++){
@@ -222,7 +221,7 @@ public class NDEVB {
 			tmp += - Gamma.logGamma(initial_param.alpha[k]) + Gamma.logGamma(param.alpha[k])
 				+initial_param.a[k]*Math.log(initial_param.b[k]) - param.a[k]*Math.log(param.b[k])
 				-Gamma.logGamma(initial_param.a[k]) + Gamma.logGamma(param.a[k])-tmp2
-				- ((k<initial_param.m) ? Math.log(2*Math.PI)*Nk[k]/2 : Math.log(2)*Nk[k]); //式(9)
+				- ((k<initial_param.m) ? Math.log(2*Math.PI)*Nk[k]/2 : Math.log(2)*Nk[k]); //(9)
 		}
 		log.info("Variational Bayesian lower bound calculation process finished.");
 		log.info("Variational lower bound: " + tmp);		

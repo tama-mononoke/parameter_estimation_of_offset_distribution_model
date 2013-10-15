@@ -12,80 +12,80 @@ import org.apache.commons.math.MaxIterationsExceededException;
 import org.apache.commons.math.special.Erf;
 
 /**
- * ガウス分布とラプラス分布の混合分布のパラメータ
- * @author 藤田雅人（電子航法研究所）
+ * Parameter of the mixture of Gaussian and Laplace distributions
+ * @author Masato Fujita (EElectroic Navigation Research Institute)
  * @version 1.0.1　(Last update: 30/11/2011)
  *
  */
 public class NDE {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(NDE.class);
 	/**
-	 * 混合分布に含まれるガウス分布の数を取得
-	 * @return 混合分布に含まれるガウス分布の数
+	 * Get the number of Gaussian components in the mixture distribution..
+	 * @return the number of Gaussian components in the mixture distribution.
 	 */
 	public int getM() {
 		return m;
 	}
 	/**
-	 * 混合分布に含まれるラプラス分布の数を取得
-	 * @return 混合分布に含まれるラプラス分布の数
+	 * Get the number of Laplace components in the mixture distribution.
+	 * @return the number of Laplace components in the mixture distribution.
 	 */
 	public int getN() {
 		return n;
 	}
 	/**
-	 * 混合比の値を取得
-	 * @return 混合比の値
+	 * Get the mixing coefficients.
+	 * @return the mixing coefficients
 	 */
 	public double[] getPi() {
 		return Arrays.copyOf(pi, pi.length);
 	}
 	/**
-	 * ラプラス分布のスケールパラメータの値
-	 * @return ラプラス分布のスケールパラメータの値を取得
+	 * Get the scale parameter of Laplace distributions.
+	 * @return the scale parameter of Laplace distributions
 	 */
 	public double[] getLambda() {
 		return Arrays.copyOf(lambda, lambda.length);
 	}
 	/**
-	 * ガウス分布の標準偏差の値を取得
-	 * @return sigma ガウス分布の標準偏差の値
+	 * Get the standard deviation of Gaussian distributions.
+	 * @return sigma the standard deviation of Gaussian distributions
 	 */
 	public double[] getSigma() {
 		return Arrays.copyOf(sigma, sigma.length);
 	}
 	/**
-	 * 混合分布に含まれるガウス分布の数
+	 * the number of Gaussian components in the mixture distribution.
 	 */
 	int m;
 	/**
-	 * 混合分布に含まれるラプラス分布の数
+	 * the number of Laplace components in the mixture distribution.
 	 */
 	int n;
 	/**
-	 * 混合比の値
+	 * the mixing coefficients
 	 */
 	double pi[];
 	/**
-	 * ラプラス分布のスケールパラメータの値
+	 * the scale parameter of Laplace distributions
 	 */
 	double lambda[];
 	/**
-	 * ガウス分布の標準偏差の値
+	 * the standard deviation of Gaussian distributions
 	 */
 	double sigma[];
 	/**
-	 * コンストラクタ
+	 * Constructor
 	 */
 	private NDE(){}
 	/**
-	 * コンストラクタ
-	 * @param pi 混合比の値
-	 * @param sigma ガウス分布の標準偏差の値
-	 * @param lambda ラプラス分布のスケールパラメータの値
+	 * Constructor
+	 * @param pi the mixing coefficients
+	 * @param sigma the standard deviation of Gaussian distributions
+	 * @param lambda the scale parameter of Laplace distributions
 	 */
 	public NDE(double[] pi, double[] sigma, double[] lambda) {
 		super();
@@ -141,9 +141,9 @@ public class NDE {
 		return tmp;
 	}
 	/**
-	 * -x以上x以下になる確率を計算
-	 * @param x x>0となる値
-	 * @return 確率
+	 * Compute the probability that the absolute value of the sample is not larger than x.
+	 * @param x Positive number
+	 * @return Probability
 	 * @throws MathException
 	 */
 	public double cumulate(double x) throws MathException{
@@ -152,7 +152,7 @@ public class NDE {
 		for(int i=0;i<m;i++){
 			double val = 1;
 			double tmp = x/(Math.sqrt(2)*sigma[i]);
-			if(tmp < 20){ //1-Erf(20)=5.40E-176でほとんど1と見なして構わない。
+			if(tmp < 20){ //1-Erf(20)=5.40E-176 is almost 1.
 				try{
 					val = Erf.erf(tmp);
 				}
@@ -171,10 +171,10 @@ public class NDE {
 	
 	private static final double incre = 1;
 	/**
-	 * -x以上x以下になる確率がgammaと等しくなるxを計算
-	 * @param gamma
-	 * @param epsilon 許容誤差
-	 * @return
+	 * Compute the x value satisfying Pr(|X| < x)= gamma for the given gamma.
+	 * @param gamma gamma
+	 * @param epsilon tolerance 
+	 * @return the value of x.
 	 * @throws MathException
 	 */
 	public double containmentInterval(double gamma, double epsilon) throws MathException{
@@ -185,7 +185,7 @@ public class NDE {
 		double val[] = new double[2];
 		val[0] = 0;
 		val[1] = cumulate(x[1]);
-		// val[0] <= gamma <= val[1]を成立させる
+		// val[0] <= gamma <= val[1]
 		while(val[1]<gamma){
 			for(int i=0;i<2;i++) x[i] += incre;
 			val[0] = val[1];

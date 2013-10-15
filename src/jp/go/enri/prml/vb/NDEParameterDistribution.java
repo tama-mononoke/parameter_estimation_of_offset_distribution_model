@@ -13,81 +13,81 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * ガウス分布とラプラス分布の混合分布のパラメータの事前／事後分布のパラメータ
- * @author 藤田雅人（電子航法研究所）
+ * Prior/posterior distribution parameters of the mixture of Gaussian and Laplace distributions
+ * @author Masato Fujita (Electronic Navigation Research Institute)
  * @version 1.0.1　(Last update: 30/11/2011)
  */
 public class NDEParameterDistribution {
 	/**
-	 * 混合分布に含まれるガウス分布の数の取得
-	 * @return 混合分布に含まれるガウス分布の数
+	 * Get the number of Gaussian components in the mixture distribution..
+	 * @return the number of Gaussian components in the mixture distribution.
 	 */
 	public int getM() {
 		return m;
 	}
 
 	/**
-	 * 混合分布に含まれるラプラス分布の数の取得
-	 * @return 混合分布に含まれるラプラス分布の数
+	 * Get the number of Laplace components in the mixture distribution.
+	 * @return the number of Laplace components in the mixture distribution.
 	 */
 	public int getN() {
 		return n;
 	}
 
 	/**
-	 * 混合比\piの事前／事後分布（ディリクレ分布）のパラメータの取得
-	 * @return 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ
+	 * Get the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi. 
+	 * @return the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi 
 	 */
 	public double[] getAlpha() {
 		return Arrays.copyOf(alpha, alpha.length);
 	}
 
 	/**
-	 * 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータaの取得
-	 * @return 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa
+	 * Get the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta.
+	 * @return the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta 
 	 */
 	public double[] getA() {
 		return Arrays.copyOf(a, a.length);
 	}
 
 	/**
-	 * 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータbの取得
-	 * @return 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb
+	 * Get the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta.
+	 * @return the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta 
 	 */
 	public double[] getB() {
 		return Arrays.copyOf(b, b.length);
 	}
 
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(NDEParameterDistribution.class);
 	/**
-	 * 混合分布に含まれるガウス分布の数
+	 * the number of Gaussian components in the mixture distribution.
 	 */
 	int m;
 	/**
-	 * 混合分布に含まれるラプラス分布の数
+	 * the number of Laplace components in the mixture distribution.
 	 */
 	int n;
 	/**
-	 * 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ
+	 * the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi 
 	 */
 	double alpha[];
 	/**
-	 * 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa
+	 * the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta 
 	 */
 	double a[];
 	/**
-	 * 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb
+	 * the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta 
 	 */
 	double b[];
 	/**
-	 * 乱数生成用ガンマ分布
+	 * Gamma distribution for random sample generation
 	 */
 	private Gamma gamma[];
 	/**
-	 * 乱数生成用ディリクレ分布
+	 * Dirichlet distribution for random sample generation
 	 */
 	private Dirichlet dirichlet;
 	/**
@@ -102,24 +102,24 @@ public class NDEParameterDistribution {
 	}
 	
 	/**
-	 * コンストラクタ
-	 * @param m 混合分布に含まれるガウス分布の数
-	 * @param n 混合分布に含まれるラプラス分布の数
-	 * @param alpha 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ ((m+n)次元配列）
-	 * @param a 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa ((m+n)次元配列）
-	 * @param b 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb ((m+n)次元配列）
+	 * Constructor
+	 * @param m the number of Gaussian components in the mixture
+	 * @param n the number of Laplace components in the mixture
+	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array）
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
 	 */
 	public NDEParameterDistribution(int m, int n, double[] alpha, double[] a, double[] b){
 		initialize(m, n, alpha, a, b);
 	}
 	
 	/**
-	 * コンストラクタ
-	 * @param m 混合分布に含まれるガウス分布の数
-	 * @param n 混合分布に含まれるラプラス分布の数
-	 * @param alpha0 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ (共有）
-	 * @param a 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa ((m+n)次元配列）
-	 * @param b 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb ((m+n)次元配列）
+	 * Constructor
+	 * @param m the number of Gaussian components in the mixture
+	 * @param n the number of Laplace components in the mixture
+	 * @param alpha0 the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi (Common）
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
 	 */
 	public NDEParameterDistribution(int m, int n, double alpha0, double[] a, double[] b){
 		double tmpAlpha[] = new double[m+n];
@@ -129,12 +129,12 @@ public class NDEParameterDistribution {
 	
 
 	/**
-	 * 初期化
-	 * @param m 混合分布に含まれるガウス分布の数
-	 * @param n 混合分布に含まれるラプラス分布の数
-	 * @param alpha 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ ((m+n)次元配列）
-	 * @param a 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa ((m+n)次元配列）
-	 * @param b 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb ((m+n)次元配列）
+	 * Initialization
+	 * @param m the number of Gaussian components in the mixture
+	 * @param n the number of Laplace components in the mixture
+	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array）
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
 	 */
 	private void initialize(int m, int n, double[] alpha, double[] a, double[] b){
 		if(m<0 || n<0){
@@ -165,11 +165,11 @@ public class NDEParameterDistribution {
 		this.alpha = Arrays.copyOf(alpha, alpha.length);
 		this.a = Arrays.copyOf(a, a.length);
 		this.b = Arrays.copyOf(b, b.length);
-		// 他のパラメータの更新
+		// Update the other parameters.
 		updateOtherParameters();
 	}
 	/**
-	 * 他のパラメータの更新
+	 * Update the other parameters.
 	 */
 	void updateOtherParameters(){
 		gamma = new Gamma[m+n];
@@ -178,8 +178,8 @@ public class NDEParameterDistribution {
 	}
 	
 	/**
-	 * パラメータの値をMAP推定
-	 * @return MAP推定値
+	 * MAP estimation of parameter values.
+	 * @return MAP estimation of parameter values.
 	 */
 	public NDE MAPEstimation(){
 		log.info("Variational Bayesian MAP estimation process started.");
@@ -223,8 +223,8 @@ public class NDEParameterDistribution {
 	}
 	
 	/**
-	 * パラメータの値を平均推定
-	 * @return 平均推定値
+	 * Average estimation of parameter values.
+	 * @return Average estimation of parameter values
 	 */
 	public NDE ptEstimation(){
 		log.info("Variational Bayesian point estimation process started.");
@@ -268,8 +268,8 @@ public class NDEParameterDistribution {
 	}
 	
 	/**
-	 * パラメータ分布からサンプリング
-	 * @return
+	 * Sampling from the parameter distribution.
+	 * @return sample
 	 */
 	public NDE sampling(){
 		double sigma[] = new double[m];

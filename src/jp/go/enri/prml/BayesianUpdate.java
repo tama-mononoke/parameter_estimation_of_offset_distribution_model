@@ -33,23 +33,23 @@ import jp.go.enri.prml.vb.NDEVB;
 import jp.go.enri.prml.vb.ONDEVB;
 
 /**
- * ベイズ更新・パラメータ最尤推定
- * @author 藤田雅人
+ * Parameter estimation entry
+ * @author Masato Fujita
  *
  */
 public class BayesianUpdate {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(BayesianUpdate.class);
 	/**
-	 * コンストラクタ
+	 * Constructor
 	 */
 	private BayesianUpdate(){}
 	
 	/**
-	 * ベイズ更新・パラメータ最尤推定を実行
-	 * @param args arg[0]: nde: NDE型
+	 * Run the parameter estimation engine and related functions 
+	 * @param args arg[0]: nde: non-offset onde: offset
 	 * @throws Exception
 	 */
 	public static void run(String args[]) throws Exception{

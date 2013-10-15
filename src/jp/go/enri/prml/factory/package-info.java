@@ -1,4 +1,4 @@
 /**
- * 設定を読み取り、インスタンスを生成
+ * Read configuration files and generate the instances.
  */
 package jp.go.enri.prml.factory;

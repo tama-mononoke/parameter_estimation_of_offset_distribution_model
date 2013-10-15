@@ -13,62 +13,62 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * ガウス分布とラプラス分布の混合オフセット分布のパラメータの事前／事後分布のパラメータ
- * @author 藤田雅人（電子航法研究所）
+ * Prior/posterior distribution parameters of the offset mixture of Gaussian and Laplace distributions
+ * @author Masato Fujita (Electronic Navigation Research Institute)
  * @version 1.0.1　(Last update: 06/12/2011)
  */
 public class ONDEParameterDistribution {
 	/**
-	 * オフセット混合比\omegaの事前／事後分布（ディリクレ分布）のパラメータを取得
-	 * @return オフセット混合比\omegaの事前／事後分布（ディリクレ分布）のパラメータ
+	 * Get the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega. 
+	 * @return the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega. 
 	 */
 	public double[] getP() {
 		return p;
 	}
 
 	/**
-	 * オフセットのとりうる値を取得
-	 * @return オフセットのとりうる値
+	 * Get the feasible offset values. 
+	 * @return the feasible offset values
 	 */
 	public double[] getOffset() {
 		return offset;
 	}
 
 	/**
-	 * 混合分布に含まれるガウス分布の数の取得
-	 * @return 混合分布に含まれるガウス分布の数
+	 * Get the number of Gaussian components in the mixture distribution..
+	 * @return the number of Gaussian components in the mixture distribution.
 	 */
 	public int getM() {
 		return m;
 	}
 
 	/**
-	 * 混合分布に含まれるラプラス分布の数の取得
-	 * @return 混合分布に含まれるラプラス分布の数
+	 * Get the number of Laplace components in the mixture distribution.
+	 * @return the number of Laplace components in the mixture distribution.
 	 */
 	public int getN() {
 		return n;
 	}
 
 	/**
-	 * 混合比\piの事前／事後分布（ディリクレ分布）のパラメータの取得
-	 * @return 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ
+	 * Get the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi. 
+	 * @return the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi 
 	 */
 	public double[] getAlpha() {
 		return Arrays.copyOf(alpha, alpha.length);
 	}
 
 	/**
-	 * 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータaの取得
-	 * @return 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa
+	 * Get the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta.
+	 * @return the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta 
 	 */
 	public double[] getA() {
 		return Arrays.copyOf(a, a.length);
 	}
 
 	/**
-	 * 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータbの取得
-	 * @return 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb
+	 * Get the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta.
+	 * @return the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta 
 	 */
 	public double[] getB() {
 		return Arrays.copyOf(b, b.length);
@@ -77,47 +77,47 @@ public class ONDEParameterDistribution {
 	
 	
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(ONDEParameterDistribution.class);
 	/**
-	 * 混合分布に含まれるガウス分布の数
+	 * the number of Gaussian components in the mixture distribution.
 	 */
 	int m;
 	/**
-	 * 混合分布に含まれるラプラス分布の数
+	 * the number of Laplace components in the mixture distribution.
 	 */
 	int n;
 	/**
-	 * オフセット混合比\omegaの事前／事後分布（ディリクレ分布）のパラメータ
+	 * the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega
 	 */
 	double p[];
 	/**
-	 * 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ
+	 * the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi 
 	 */
 	double alpha[];
 	/**
-	 * 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa
+	 * the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta 
 	 */
 	double a[];
 	/**
-	 * 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb
+	 * the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta 
 	 */
 	double b[];
 	/**
-	 * オフセットのとりうる値
+	 * the feasible offset values
 	 */
 	double[] offset;
 	/**
-	 * 乱数生成用ガンマ分布
+	 * Gamma distribution for random sample generation
 	 */
 	private Gamma gamma[];
 	/**
-	 * 乱数生成用ディリクレ分布
+	 * Dirichlet distribution for random sample generation
 	 */
 	private Dirichlet dirichlet_alpha;
 	/**
-	 * 乱数生成用ディリクレ分布
+	 * Dirichlet distribution for random sample generation
 	 */
 	private Dirichlet dirichlet_p;
 	
@@ -135,28 +135,28 @@ public class ONDEParameterDistribution {
 	}
 	
 	/**
-	 * コンストラクタ
-	 * @param m 混合分布に含まれるガウス分布の数
-	 * @param n 混合分布に含まれるラプラス分布の数
-	 * @param offset オフセット値 (L次元配列）
-	 * @param p 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ (L次元配列）
-	 * @param alpha 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ ((m+n)次元配列）
-	 * @param a 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa ((m+n)次元配列）
-	 * @param b 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb ((m+n)次元配列）
+	 * Constructor
+	 * @param m the number of Gaussian components in the mixture
+	 * @param n the number of Laplace components in the mixture
+	 * @param offset Offset values (L-dimensional array）
+	 * @param p the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (L-dimensional array）
+	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array）
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
 	 */
 	public ONDEParameterDistribution(int m, int n, double offset[], double[] p, double[] alpha, double[] a, double[] b){
 		initialize(m, n, offset, p, alpha, a, b);
 	}
 	
 	/**
-	 * コンストラクタ
-	 * @param m 混合分布に含まれるガウス分布の数
-	 * @param n 混合分布に含まれるラプラス分布の数
-	 * @param offset オフセット値 (L次元配列）
-	 * @param p0 オフセット混合比\piの事前／事後分布（ディリクレ分布）のパラメータ (共有）
-	 * @param alpha0 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ (共有）
-	 * @param a 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa ((m+n)次元配列）
-	 * @param b 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb ((m+n)次元配列）
+	 * Constructor
+	 * @param m the number of Gaussian components in the mixture
+	 * @param n the number of Laplace components in the mixture
+	 * @param offset Offset values (L-dimensional array）
+	 * @param p0 the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (common）
+	 * @param alpha0 the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi (Common）
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
 	 */
 	public ONDEParameterDistribution(int m, int n,double offset[], double p0, double alpha0, double[] a, double[] b){
 		double tmpAlpha[] = new double[m+n];
@@ -168,14 +168,14 @@ public class ONDEParameterDistribution {
 	
 
 	/**
-	 * 初期化
-	 * @param m 混合分布に含まれるガウス分布の数
-	 * @param n 混合分布に含まれるラプラス分布の数
-	 * @param offset オフセット値 (L次元配列）
-	 * @param p 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ (L次元配列）
-	 * @param alpha 混合比\piの事前／事後分布（ディリクレ分布）のパラメータ ((m+n)次元配列）
-	 * @param a 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータa ((m+n)次元配列）
-	 * @param b 精度パラメータ\etaの事前／事後分布（ガンマ分布）のパラメータb ((m+n)次元配列）
+	 * Initialization
+	 * @param m the number of Gaussian components in the mixture
+	 * @param n the number of Laplace components in the mixture
+	 * @param offset Offset values (L-dimensional array）
+	 * @param p the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (L-dimensional array）
+	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array）
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
 	 */
 	private void initialize(int m, int n, double offset[], double p[], double[] alpha, double[] a, double[] b){
 		if(m<0 || n<0){
@@ -214,12 +214,12 @@ public class ONDEParameterDistribution {
 		this.p = Arrays.copyOf(p, p.length);
 		this.a = Arrays.copyOf(a, a.length);
 		this.b = Arrays.copyOf(b, b.length);
-		// 他のパラメータの更新
+		// Update the other parameters.
 		updateOtherParameters();
 	}
 	
 	/**
-	 * 他のパラメータの更新
+	 * Update the other parameters.
 	 */
 	void updateOtherParameters(){
 		gamma = new Gamma[m+n];
@@ -229,8 +229,8 @@ public class ONDEParameterDistribution {
 	}
 	
 	/**
-	 * パラメータの値をMAP推定
-	 * @return MAP推定値
+	 * MAP estimation of parameter values.
+	 * @return MAP estimation of parameter values.
 	 */
 	public ONDE MAPEstimation(){
 		log.info("Variational Bayesian MAP estimation process started.");
@@ -285,8 +285,8 @@ public class ONDEParameterDistribution {
 	}
 	
 	/**
-	 * パラメータの値をMAP推定
-	 * @return MAP推定値
+	 * Average estimation of parameter values.
+	 * @return Average estimation of parameter values
 	 */
 	public ONDE ptEstimation(){
 		log.info("Variational Bayesian point estimation process started.");
@@ -342,9 +342,9 @@ public class ONDEParameterDistribution {
 	}
 	
 	/**
-	 * 各オフセット値が適用されている確率を推定
-	 * @param x 観測値
-	 * @return 各オフセット値が適用されている確率
+	 * Estimate the probability that each feasible offset value is applied.
+	 * @param x Observation
+	 * @return Probability that each feasible offset value is applied.
 	 */
 	public double[] estimateOffsetProbability(double x){
 		double data[] = new double[1];
@@ -372,10 +372,10 @@ public class ONDEParameterDistribution {
 			engine.Estep(params,data,r);
 			// M step
 			engine.Mstep(this,data,r,Rk,params);
-			// 変分下限の計算
+			// lower bound
 			lowerbound_pre = lowerbound;
 			lowerbound = engine.lowerbound(this,params,r,Rk);
-			// 停止条件
+			// Stop condition
 			if(Math.abs(lowerbound - lowerbound_pre) < ONDEVB.threshold) flag = false;
 			else if(lowerbound_pre > lowerbound) throw new ArithmeticException();
 		}while(flag);
@@ -388,8 +388,8 @@ public class ONDEParameterDistribution {
 	}
 	
 	/**
-	 * パラメータ分布からサンプリング
-	 * @return
+	 * Sampling from the parameter distribution.
+	 * @return sample
 	 */
 	public ONDE sampling(){
 		double sigma[] = new double[m];

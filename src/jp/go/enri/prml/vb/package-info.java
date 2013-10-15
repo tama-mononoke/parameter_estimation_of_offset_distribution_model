@@ -1,4 +1,4 @@
 /**
- * 変分ベイズ法
+ * Variational Bayesian Method
  */
 package jp.go.enri.prml.vb;
