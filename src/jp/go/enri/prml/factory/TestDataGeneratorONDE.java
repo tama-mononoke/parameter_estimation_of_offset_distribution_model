@@ -14,7 +14,7 @@ import org.apache.commons.math.random.MersenneTwister;
 import org.apache.commons.math.random.RandomGenerator;
 
 /**
- * {@link VariationBayesMLM} test data generator
+ * Test data generator (Offset mixturre distribution)
  * @author Masato Fujita
  * 
  */
@@ -148,7 +148,7 @@ public class TestDataGeneratorONDE {
 	
 	/**
 	 * Test program. Random samples and the identification number of the generating distribution component are recorded.
-	 * @param args args[0]:Configuration file defining distribution, args[1]：output file, args[2]: NUmber of generated samples.
+	 * @param args args[0]:Configuration file defining distribution, args[1]:output file, args[2]: NUmber of generated samples.
 	 */
 	public static void main(String[] args) {
 		try{

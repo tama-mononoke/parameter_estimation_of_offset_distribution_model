@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Parameter estimation of the mixture distribution by means of the EM algorithm.
  * @author Masato Fujita (Electronic Navigation Research Institute) 
- * @version 1.0.1　(Last update: 30/11/2011)
+ * @version 1.0.1 (Last update: 30/11/2011)
  *
  */
 public class NDEEM {

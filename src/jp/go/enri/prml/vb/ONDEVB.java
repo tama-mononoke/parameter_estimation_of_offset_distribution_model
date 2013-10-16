@@ -9,8 +9,8 @@ import org.apache.commons.math.special.Gamma;
 
 /**
  * Parameter estimation of the offset mixture distribution by means of the variational Bayesian method.
- * @author Masato Fujita（Electronic Navigation Research Institute）
- * @version 1.0.1　(Last update: 06/12/2011)
+ * @author Masato Fujita (Electronic Navigation Research Institute)
+ * @version 1.0.1 (Last update: 06/12/2011)
  *
  */
 public class ONDEVB {
@@ -223,7 +223,6 @@ public class ONDEVB {
 	 * Lower bound
 	 * @param initial_param Prior distribution(IN)
 	 * @param r Values of `r'(IN)
-	 * @param t Values of `t'(IN)
 	 * @param Rk \sum_{i=1}^N \sum_{l=1}^L r_{i,k,l}(IN)
 	 * @param param Parameter distribution(IN)
 	 * @return lower bound

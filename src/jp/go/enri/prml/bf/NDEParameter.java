@@ -7,32 +7,32 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 総当たり法によるガウス分布とラプラス分布の混合分布のパラメータ最尤推定に用いるパラメータ
- * @author 藤田雅人
+ * Parameters used for brute-force search parameter estimation (mixture distribution)
+ * @author Masato Fujita
  *
  */
 public class NDEParameter {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(NDEParameter.class);
 	/**
-	 * 区間分割数
+	 * Division number
 	 */
 	int D;
 	/**
-	 * シグマのとりうる範囲
+	 * Possible range of sigma
 	 */
 	double initial_sigma_bound[][];
 	/**
-	 * ラムダのとりうる範囲
+	 * Possible range of lambda
 	 */
 	double initial_lambda_bound[][];
 	/**
-	 * コンストラクタ
-	 * @param d
-	 * @param initial_sigma_bound
-	 * @param initial_lambda_bound
+	 * Constructor
+	 * @param d division number 
+	 * @param initial_sigma_bound Possible range of sigma
+	 * @param initial_lambda_bound Possible range of lambda
 	 */
 	public NDEParameter(int d, double[][] initial_sigma_bound,
 			double[][] initial_lambda_bound) {

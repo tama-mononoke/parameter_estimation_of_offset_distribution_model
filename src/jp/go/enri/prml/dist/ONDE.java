@@ -10,8 +10,8 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Parameter of offset mixture distribution with Gaussian and Laplace components
- * @author Masato Fujita（Electronic Navigation Research Institute）
- * @version 1.0.1　(Last update: 06/12/2011)
+ * @author Masato Fujita(Electronic Navigation Research Institute)
+ * @version 1.0.1 (Last update: 06/12/2011)
  *
  */
 public class ONDE {

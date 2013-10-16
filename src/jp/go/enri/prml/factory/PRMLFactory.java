@@ -25,7 +25,7 @@ import jp.go.enri.prml.vb.ONDEParameterDistribution;
 /**
  * Read the cofiguration and generate instances. 
  * @author Masato Fujita
- * @version 1.0.1　(Last update: 30/11/2011)
+ * @version 1.0.1 (Last update: 30/11/2011)
  */
 public class PRMLFactory {
 	private PRMLFactory(){}

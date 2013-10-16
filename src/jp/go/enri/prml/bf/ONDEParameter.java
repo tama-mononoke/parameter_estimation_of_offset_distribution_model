@@ -7,37 +7,37 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 総当たり法によるガウス分布とラプラス分布の混合オフセット分布のパラメータ最尤推定に用いるパラメータ
- * @author 藤田雅人
+ * Parameters used for brute-force search parameter estimation (offset mixture distribution)
+ * @author Masato Fujita
  *
  */
 public class ONDEParameter {
 	/**
-	 * ログの取得
+	 * Log
 	 */
 	public static Log log = LogFactory.getLog(ONDEParameter.class);
 	/**
-	 * 区間分割数
+	 * Division number
 	 */
 	int D;
 	/**
-	 * オフセット値
+	 * Feasible offset values
 	 */
 	double offset[];
 	/**
-	 * シグマのとりうる範囲
+	 * Possible range of sigma
 	 */
 	double initial_sigma_bound[][];
 	/**
-	 * ラムダのとりうる範囲
+	 * Possible range of lambda
 	 */
 	double initial_lambda_bound[][];
 	/**
-	 * コンストラクタ
-	 * @param d 区間分割数
-	 * @param offset オフセット値
-	 * @param initial_sigma_bound シグマのとりうる範囲
-	 * @param initial_lambda_bound ラムダのとりうる範囲
+	 * Constructor
+	 * @param d Division number
+	 * @param offset Feasible offset values
+	 * @param initial_sigma_bound Possible range of sigma
+	 * @param initial_lambda_bound Possible range of lambda
 	 */
 	public ONDEParameter(int d, double offset[], double[][] initial_sigma_bound,
 			double[][] initial_lambda_bound) {

@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Prior/posterior distribution parameters of the mixture of Gaussian and Laplace distributions
  * @author Masato Fujita (Electronic Navigation Research Institute)
- * @version 1.0.1　(Last update: 30/11/2011)
+ * @version 1.0.1 (Last update: 30/11/2011)
  */
 public class NDEParameterDistribution {
 	/**
@@ -105,9 +105,9 @@ public class NDEParameterDistribution {
 	 * Constructor
 	 * @param m the number of Gaussian components in the mixture
 	 * @param n the number of Laplace components in the mixture
-	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array）
-	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
-	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
+	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array)
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array)
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array)
 	 */
 	public NDEParameterDistribution(int m, int n, double[] alpha, double[] a, double[] b){
 		initialize(m, n, alpha, a, b);
@@ -117,9 +117,9 @@ public class NDEParameterDistribution {
 	 * Constructor
 	 * @param m the number of Gaussian components in the mixture
 	 * @param n the number of Laplace components in the mixture
-	 * @param alpha0 the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi (Common）
-	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
-	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
+	 * @param alpha0 the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi (Common)
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array)
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array)
 	 */
 	public NDEParameterDistribution(int m, int n, double alpha0, double[] a, double[] b){
 		double tmpAlpha[] = new double[m+n];
@@ -132,9 +132,9 @@ public class NDEParameterDistribution {
 	 * Initialization
 	 * @param m the number of Gaussian components in the mixture
 	 * @param n the number of Laplace components in the mixture
-	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array）
-	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
-	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
+	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array)
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array)
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array)
 	 */
 	private void initialize(int m, int n, double[] alpha, double[] a, double[] b){
 		if(m<0 || n<0){

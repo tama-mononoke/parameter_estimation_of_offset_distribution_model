@@ -35,7 +35,6 @@ import jp.go.enri.prml.vb.ONDEVB;
 /**
  * Parameter estimation entry
  * @author Masato Fujita
- *
  */
 public class BayesianUpdate {
 	/**
@@ -60,8 +59,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * ONDE型モデル
-	 * @param args args[0]: rg: 乱数生成, vb:変分ベイズ, em:EM法, bf:総当たり法, oe:オフセット値推定
+	 * For Offset mixture distribution
+	 * @param args args[0]: rg: Random sample generation, vb: variational Bayes, em:EM algorithm, bf: Brute-force search, oe: Offset value estimation
 	 * @throws Exception
 	 */
 	private static void ONDE(String args[]) throws Exception{
@@ -74,8 +73,8 @@ public class BayesianUpdate {
 		else throw new IllegalArgumentException();
 	}
 	/**
-	 * オフセット推定
-	 * @param args args[0]: d: 分布モデルを用いた推定, b: ベイズモデルパラメータ分布を用いた推定
+	 * Offset value estimation
+	 * @param args args[0]: d: Estimation based on distribution model, b: Estimation based on Bsyesian prior/posterior distribution
 	 * @throws Exception
 	 */
 	private static void ONDEOffset(String args[]) throws Exception{
@@ -87,8 +86,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * 分布モデルを用いたオフセット推定
-	 * @param args args[0]:分布を定義したプロパティファイル, args[1]：データファイル, args[2]:出力ファイル
+	 * Offset value estimation based on distribution models
+	 * @param args args[0]:Configuration file defining distribution model, args[1]:data file, args[2]:output file
 	 * @throws Exception
 	 */
 	private static void ONDEOffset1(String args[]) throws Exception{
@@ -116,8 +115,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * ベイズモデルパラメータ分布を用いたオフセット推定
-	 * @param args args[0]:分布を定義したプロパティファイル, args[1]：データファイル, args[2]:出力ファイル
+	 * Offset value estimation based on Bsyesian prior/posterior distribution
+	 * @param args args[0]:Configuration file defining distribution model, args[1]:data file, args[2]:output file
 	 * @throws Exception
 	 */
 	private static void ONDEOffset2(String args[]) throws Exception{
@@ -145,8 +144,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * ONDE型分布モデルサンプル生成
-	 * @param args args[0]:分布を定義したプロパティファイル, args[1]：データ出力個数, args[2]:出力ファイル
+	 * Random sample generation (offset mixture distribution)
+	 * @param args args[0]:Configuration file defining distribution model, args[1]:Number of the generated samples, args[2]:output file
 	 */
 	private static void ONDERandom(String args[]) throws Exception{
 		for(int i=0;i<args.length;i++){
@@ -168,8 +167,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * 総当たり法によるONDE型分布モデルのパラメータ最尤推定
-	 * @param args args[0]:プロパティファイル, args[1]：データファイル, args[2]:出力ファイル
+	 * Parameter estimation by means of brute-force search (offset mixture distribution)
+	 * @param args args[0]:Configuration file, args[1]:data file, args[2]:output file
 	 */
 	private static void ONDEBF(String args[]) throws Exception{
 		for(int i=0;i<args.length;i++){
@@ -217,8 +216,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * EM法によるONDE型分布モデルのパラメータ最尤推定
-	 * @param args args[0]:プロパティファイル, args[1]：データファイル, args[2]:出力ファイル
+	 * Parameter estimation by means of EM algorithm (offset mixture distribution)
+	 * @param args args[0]:Configuration file, args[1]:data file, args[2]:output file
 	 */
 	private static void ONDEEM(String args[]) throws Exception{
 		for(int i=0;i<args.length;i++){
@@ -267,8 +266,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * 変分ベイズ法によるONDE型分布モデルのパラメータ最尤推定
-	 * @param args args[0]:プロパティファイル, args[1]：データファイル, args[2]:出力ファイル
+	 * Parameter estimation by means of variational Bayes (offset mixture distribution)
+	 * @param args args[0]:Configuration file, args[1]:data file, args[2]:output file
 	 */
 	private static void ONDEVB(String args[]) throws Exception{
 		for(int i=0;i<args.length;i++){
@@ -336,8 +335,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * NDE型モデル
-	 * @param args args[0]: rg: 乱数生成, vb:変分ベイズ, em:EM法, bf:総当たり法
+	 * For Non-offset mixture distribution
+	 * @param args args[0]: rg: Random sample generation, vb: variational Bayes, em:EM algorithm, bf: Brute-force search
 	 * @throws Exception
 	 */
 	private static void NDE(String args[]) throws Exception{
@@ -350,8 +349,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * NDE型分布モデルサンプル生成
-	 * @param args args[0]:分布を定義したプロパティファイル, args[1]：データ出力個数, args[2]:出力ファイル
+	 * Random sample generation (mixture distribution)
+	 * @param args args[0]:Configuration file defining distribution model, args[1]:Number of the generated samples, args[2]:output file
 	 */
 	private static void NDERandom(String args[]) throws Exception{
 		for(int i=0;i<args.length;i++){
@@ -373,8 +372,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * 総当たり法によるNDE型分布モデルのパラメータ最尤推定
-	 * @param args args[0]:プロパティファイル, args[1]：データファイル, args[2]:出力ファイル
+	 * Parameter estimation by means of brute-force search (mixture distribution)
+	 * @param args args[0]:Configuration file, args[1]:data file, args[2]:output file
 	 */
 	private static void NDEBF(String args[]) throws Exception{
 		for(int i=0;i<args.length;i++){
@@ -415,8 +414,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * EM法によるNDE型分布モデルのパラメータ最尤推定
-	 * @param args args[0]:プロパティファイル, args[1]：データファイル, args[2]:出力ファイル
+	 * Parameter estimation by means of EM algorithm (mixture distribution)
+	 * @param args args[0]:Configuration file, args[1]:data file, args[2]:output file
 	 */
 	private static void NDEEM(String args[]) throws Exception{
 		for(int i=0;i<args.length;i++){
@@ -458,8 +457,8 @@ public class BayesianUpdate {
 	}
 	
 	/**
-	 * 変分ベイズ法によるNDE型分布モデルのパラメータ最尤推定
-	 * @param args args[0]:プロパティファイル, args[1]：データファイル, args[2]:出力ファイル
+	 * Parameter estimation by means of variational Bayes (mixture distribution)
+	 * @param args args[0]:Configuration file, args[1]:data file, args[2]:output file
 	 */
 	private static void NDEVB(String args[]) throws Exception{
 		for(int i=0;i<args.length;i++){

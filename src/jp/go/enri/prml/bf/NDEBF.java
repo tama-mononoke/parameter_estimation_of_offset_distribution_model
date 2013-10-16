@@ -11,8 +11,8 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * Maximum likelihood estimation of the mixture distribution by means of brute-force search.
- * @author Masato Fujita (Electronic Navigation Research Istitute)
- * @version 1.0.1　(Last update: 30/11/2011)
+ * @author Masato Fujita (Electronic Navigation Research Institute)
+ * @version 1.0.1 (Last update: 30/11/2011)
  *
  */
 public class NDEBF {
@@ -224,7 +224,6 @@ public class NDEBF {
 	
 	/**
 	 * parameter estimation by means of the brute-force search. 
-	 * @param D division number
 	 * @param initial_params inital parameter
 	 * @param data observations
 	 * @return estimations

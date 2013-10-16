@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Prior/posterior distribution parameters of the offset mixture of Gaussian and Laplace distributions
  * @author Masato Fujita (Electronic Navigation Research Institute)
- * @version 1.0.1　(Last update: 06/12/2011)
+ * @version 1.0.1 (Last update: 06/12/2011)
  */
 public class ONDEParameterDistribution {
 	/**
@@ -138,11 +138,11 @@ public class ONDEParameterDistribution {
 	 * Constructor
 	 * @param m the number of Gaussian components in the mixture
 	 * @param n the number of Laplace components in the mixture
-	 * @param offset Offset values (L-dimensional array）
-	 * @param p the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (L-dimensional array）
-	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array）
-	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
-	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
+	 * @param offset Offset values (L-dimensional array)
+	 * @param p the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (L-dimensional array)
+	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array)
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array)
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array)
 	 */
 	public ONDEParameterDistribution(int m, int n, double offset[], double[] p, double[] alpha, double[] a, double[] b){
 		initialize(m, n, offset, p, alpha, a, b);
@@ -152,11 +152,11 @@ public class ONDEParameterDistribution {
 	 * Constructor
 	 * @param m the number of Gaussian components in the mixture
 	 * @param n the number of Laplace components in the mixture
-	 * @param offset Offset values (L-dimensional array）
-	 * @param p0 the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (common）
-	 * @param alpha0 the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi (Common）
-	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
-	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
+	 * @param offset Offset values (L-dimensional array)
+	 * @param p0 the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (common)
+	 * @param alpha0 the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi (Common)
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array)
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array)
 	 */
 	public ONDEParameterDistribution(int m, int n,double offset[], double p0, double alpha0, double[] a, double[] b){
 		double tmpAlpha[] = new double[m+n];
@@ -171,11 +171,11 @@ public class ONDEParameterDistribution {
 	 * Initialization
 	 * @param m the number of Gaussian components in the mixture
 	 * @param n the number of Laplace components in the mixture
-	 * @param offset Offset values (L-dimensional array）
-	 * @param p the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (L-dimensional array）
-	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array）
-	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array）
-	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array）
+	 * @param offset Offset values (L-dimensional array)
+	 * @param p the parameters of Dirichlet prior/posterior distribution of the offset mixing coefficients \omega (L-dimensional array)
+	 * @param alpha the parameters of Dirichlet prior/posterior distribution of the mixing coefficients \pi ((m+n)-dimensional array)
+	 * @param a the parameters `a' of Gamma prior/posterior distribution of the accuracy parameters \eta ((m+n)-dimensional array)
+	 * @param b the parameters `b' of Gamma prior/posterior distribution of the accuracy parameters \eta  ((m+n)-dimensional array)
 	 */
 	private void initialize(int m, int n, double offset[], double p[], double[] alpha, double[] a, double[] b){
 		if(m<0 || n<0){

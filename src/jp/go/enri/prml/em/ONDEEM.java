@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Parameter estimation of the offset mixture distribution by means of the EM algorithm.
  * @author Masato Fujita (Electronic Navigation Research Institute) 
- * @version 1.0.1　(Last update: 06/12/2011)
+ * @version 1.0.1 (Last update: 06/12/2011)
  *
  */
 public class ONDEEM {
@@ -62,7 +62,6 @@ public class ONDEEM {
 	 */
 	public Result estimate(ONDE initial_params, double[] data){
 		log.info("EM method estimation process started.");
-		// 変数の初期化
 		log.info("EM method initialization process started.");
 		int N = data.length;
 		int K = initial_params.getM() + initial_params.getN();

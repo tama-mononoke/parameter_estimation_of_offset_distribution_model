@@ -10,7 +10,7 @@ import org.apache.commons.math.special.Gamma;
 /**
  * Parameter estimation of the mixture distribution by means of the variational Bayesian method.
  * @author Masato Fujita (Electronic Navigation Research Institute) 
- * @version 1.0.1　(Last update: 30/11/2011)
+ * @version 1.0.1 (Last update: 30/11/2011)
  *
  */
 public class NDEVB {
@@ -56,7 +56,7 @@ public class NDEVB {
 	/**
 	 * Parameter estimation by means of variational Bayes
 	 * @param initial_params prior distribution
-	 * @param dataMatrix data matrix
+	 * @param data data matrix
 	 * @return estimation result
 	 */
 	public Result estimate(NDEParameterDistribution initial_params, double data[]){
@@ -168,7 +168,7 @@ public class NDEVB {
 			Nk[i] = 0;
 			for(int j=0;j<N;j++) Nk[i] += r[j][i];
 		}
-		// \sum_{i=1}^N r_{i,k}x_i^2と\sum_{i=1}^N r_{i,k}|x_i|
+		// \sum_{i=1}^N r_{i,k}x_i^2 \sum_{i=1}^N r_{i,k}|x_i|
 		double xk[] = new double[K];
 		for(int k=0;k<param.m;k++){
 			xk[k] = 0;
